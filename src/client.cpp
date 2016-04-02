@@ -35,5 +35,7 @@ int Client::init(std::string ip, int port)
 
 int Client::start()
 {
+    int count;
+    count = write(_server_socket, "hello", 6);
     return 0; 
 }
