@@ -28,7 +28,7 @@ int Client::init(std::string ip, int port)
     server_addr.sin_port = htons(port);
     server_addr.sin_addr.s_addr = inet_addr(ip.c_str());
     //连接
-    connect(_server_socket, (struct socket_addr *)&server_addr, sizeof(server_addr));
+    connect(_server_socket, (struct socketaddr *)&server_addr, sizeof(server_addr));
 
     return 0;
 }
