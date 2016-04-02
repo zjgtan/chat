@@ -9,8 +9,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-
-
 Server::Server()
 {}
 
@@ -19,6 +17,17 @@ Server::Server(std::string ip, int port) : _ip(ip), _port(port)
 
 Server::~Server()
 {
+}
+
+int Server::setnonblocking(int conn_socket)
+{
+    return 0;
+}
+
+int Server::proc_message(char *buf)
+{  
+    printf("%s\n", buf);
+    return 0;
 }
 
 int Server::init()
@@ -44,7 +53,6 @@ int Server::init()
     return 0;
 }
 
-int Server
 int Server::start()
 {
     int nfds;
@@ -74,6 +82,10 @@ int Server::start()
             else if (events[i].events & EPOLLIN)
             {
                 // 处理读消息
+                int conn_socket = events[i].data.fd;
+                ssize_t count;
+                count = read(conn_socket, buf, sizeof(buf));
+                proc_message(buf)
                 
             }
         }
