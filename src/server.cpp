@@ -1,4 +1,6 @@
 #include "server.h"
+#include <unistd.h>
+#include <fcntl.h>
 #include <sys/epoll.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -23,7 +25,7 @@ Server::~Server()
 int Server::setnonblocking(int conn_socket)
 {
     int options;
-    options = fcntl(sock, F_GETFL);
+    options = fcntl(conn_socket, F_GETFL);
     options = options | O_NONBLOCK;
     fcntl(conn_socket, F_SETFL, options);
     return 0;
