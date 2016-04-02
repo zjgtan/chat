@@ -21,6 +21,10 @@ Server::~Server()
 
 int Server::setnonblocking(int conn_socket)
 {
+    int options;
+    options = fcntl(sock, F_GETFL);
+    options = options | O_NONBLOCK;
+    fcntl(conn_socket, F_SETFL, options);
     return 0;
 }
 
@@ -84,6 +88,8 @@ int Server::start()
                 // 处理读消息
                 int conn_socket = events[i].data.fd;
                 ssize_t count;
+                //清空接收缓存
+                memset(_recv_buf, 0, strlen(_recv_buf));
                 count = read(conn_socket, _recv_buf, sizeof(_recv_buf));
                 proc_message(_recv_buf);
             }
