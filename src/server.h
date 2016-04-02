@@ -27,8 +27,12 @@ private:
     //主连接
     std::string _ip;
     int _port;
+    //连接监听
     int _listen_socket;
+    //epoll事件触发监听
     int _epoll_fd;
+    //读缓冲区
+    char _recv_buf[256];
 
 
 };

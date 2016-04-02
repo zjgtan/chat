@@ -75,7 +75,7 @@ int Server::start()
                 //添加事件监听
                 ev.events = EPOLLIN | EPOLLET;
                 ev.data.fd = conn_socket;
-                epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, conn_socket);
+                epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, conn_socket, &ev);
 
                 //添加客户端连接到全局词典
             }
@@ -84,9 +84,8 @@ int Server::start()
                 // 处理读消息
                 int conn_socket = events[i].data.fd;
                 ssize_t count;
-                count = read(conn_socket, buf, sizeof(buf));
-                proc_message(buf)
-                
+                count = read(conn_socket, _recv_buf, sizeof(_recv_buf));
+                proc_message(_recv_buf);
             }
         }
     }
