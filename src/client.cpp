@@ -92,7 +92,8 @@ int Client::read_from_socket(std::string& str)
 {
     int count;
     memset(_recv_buf, 0, strlen(_recv_buf));
-    count = read(_server_socket, _recv_buf, strlen(_recv_buf));
+    count = read(_server_socket, _recv_buf, sizeof(_recv_buf));
+    fprintf(stderr, "count: %d, read: %s\n", count, _recv_buf);
     str = _recv_buf;
 
     return count;
