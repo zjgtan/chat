@@ -61,12 +61,12 @@ int Client::start()
     login();
     while (1)
     {
-        nfds = epoll_wait(_epoll_fd, events, MAX_EVENTS);
+        nfds = epoll_wait(_epoll_fd, events, MAX_EVENTS, -1);
         for (int i = 0; i < nfds; i++)
         {
             if (events[i].events & EPOLLIN)
             {
-                   if (events[i].data.fd == _server_socket)
+                if (events[i].data.fd == _server_socket)
                 {
                     //处理读消息
                     std::string msg;
@@ -83,6 +83,7 @@ int Client::start()
                 }
 
             }
+        }
     }
     return 0;
 }
@@ -97,6 +98,13 @@ int Client::read_from_socket(std::string& str)
     return count;
 }
 
+int Client::write_to_socket(std::string& buf)
+{
+    int count;
+    count = write(_server_socket, buf.c_str(), strlen(buf.c_str()));
+    return count;
+}
+
 int Client::login()
 {
     printf("username:");
@@ -105,14 +113,14 @@ int Client::login()
     std::string msg;
     msg = "login:" + username;
     int count;
-    count = write(msg);
+    count = write_to_socket(msg);
     return count;
 }
 
 int Client::send_msg(std::string& msg)
 { 
-    int count
-    count = write(msg);
+    int count;
+    count = write_to_socket(msg);
     return count;
 }
 
@@ -123,9 +131,4 @@ int Client::read_msg(std::string& msg)
     return count;
 }
 
-int Client::write_to_socket(std::string& buf)
-{
-    int count;
-    count = write(_server_socket, buf.c_str(), strlen(buf.c_str()));
-    return count;
-}
+

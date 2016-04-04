@@ -28,6 +28,4 @@ private:
     // epoll监听
     int _epoll_fd;
     char _recv_buf[1024];
-
-
 };
