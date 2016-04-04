@@ -22,6 +22,11 @@ private:
     int setnonblocking(int conn_socket);
     //处理消息
     int proc_message(char *buf);
+    //底层通信接口
+    //向客户端发送消息
+    int write(int client_socket, std::string& buf);
+    //接收服务端
+    int read(int client_socket, std::string& buf);
 
 private:
     //主连接
@@ -33,7 +38,6 @@ private:
     int _epoll_fd;
     //读缓冲区
     char _recv_buf[256];
-
 
 };
 
