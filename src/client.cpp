@@ -58,7 +58,7 @@ int Client::start()
     int nfds;
 
     //注册
-    register();
+    login();
     while (1)
     {
         nfds = epoll_wait(_epoll_fd, events, MAX_EVENTS);
@@ -87,7 +87,7 @@ int Client::start()
     return 0;
 }
 
-int Client::read(std::string& str)
+int Client::read_from_socke_from_sockett(std::string& str)
 {
     int count;
     memset(_recv_buf, 0, strlen(_recv_buf));
@@ -97,12 +97,13 @@ int Client::read(std::string& str)
     return count;
 }
 
-int Client::register()
+int Client::login()
 {
+    printf("username:");
     std::string username;
     getline(std::cin, username);
     std::string msg;
-    msg = "regist:" + username;
+    msg = "login:" + username;
     int count;
     count = write(msg);
     return count;
@@ -118,11 +119,11 @@ int Client::send_msg(std::string& msg)
 int Client::read_msg(std::string& msg)
 {
     int count;
-    count = read(msg);
+    count = read_from_socket(msg);
     return count;
 }
 
-int Client::write(std::string& buf)
+int Client::write_to_socket(std::string& buf)
 {
     int count;
     count = write(_server_socket, buf.c_str(), strlen(buf.c_str()));

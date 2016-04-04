@@ -12,11 +12,11 @@ public:
     int init(std::string ip, int port);
     int start();
     //读数据
-    int read(std::string& buf); 
+    int read_from_socket(std::string& buf); 
     //写数据
-    int write(std::string& buf);
+    int write_to_socket(std::string& buf);
     //登录
-    int login(std::string& username);
+    int login();
     //发消息
     int send_msg(std::string& msg);
     //收消息
@@ -25,5 +25,9 @@ public:
 private:
     // 服务器连接
     int _server_socket;
+    // epoll监听
+    int _epoll_fd;
     char _recv_buf[1024];
+
+
 };
