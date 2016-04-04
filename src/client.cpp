@@ -87,7 +87,7 @@ int Client::start()
     return 0;
 }
 
-int Client::read_from_socke_from_sockett(std::string& str)
+int Client::read_from_socket(std::string& str)
 {
     int count;
     memset(_recv_buf, 0, strlen(_recv_buf));
